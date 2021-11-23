@@ -2,6 +2,8 @@ import React from "react";
 import { Box, Button, Card, CardContent, Dialog, Typography, TextField } from "@mui/material";
 import { makeStyles } from "@mui/styles"
 import { createTheme } from "@mui/material/styles";
+import { useParams } from 'react-router-dom';
+import superagent from "superagent";
 
 const theme = createTheme()
 const useStyles = makeStyles(() => ({
@@ -16,7 +18,7 @@ const useStyles = makeStyles(() => ({
     },
     card: {
         // marginBottom: theme.spacing(5),
-        
+
         [theme.breakpoints.down("sm")]: {
             minWidth: "70vw",
         },
@@ -60,44 +62,60 @@ const useStyles = makeStyles(() => ({
 
 const Post = (props) => {
     // option : 사진과 텍스트를 어떤 비율로 넣을지 선택 (default = 사진+텍스트, gallery = 사진)
-    const { userType, option, title, price, image, children, updateEnterprise, index } = props;
+    const { userType, option, updateEnterprise, index, value } = props;
     const classes = useStyles();
-
     const [dialogCard, setDialogCard] = React.useState(false);
     const openCard = () => { setDialogCard(true) };
     const closeCard = () => { setDialogCard(false) };
 
+    const {enterpriseCode} = useParams();
+    // 임시저장하고, 수정되면 PUT 요청을 보내는 state와 함수
+    const [menuTemp, setMenuTemp] = React.useState();
+    React.useEffect( () => {
+        console.log("Start useEffect");
+        if(menuTemp){
+            console.log("Menu have been changed");
+            const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode + "/menu/" + value.mcode;
+            
+            superagent.put(url)
+                .set('Content-Type', 'application/json')
+                .send(menuTemp)
+                .end((err, res) => {
+                    console.log(JSON.parse(res.text).status);
+                    console.log(menuTemp);
+                    if (!err && JSON.parse(res.text).status ){
+                        updateEnterprise(option, index, value.mimage, menuTemp)
+                        console.log("Complete");
+                    }else{
+                        console.log("Error");
+                    }
+                })
+        }
+    }, menuTemp )
+
     return (
         <div style={{ display: "flex", justifyContent: "center" }} className={classes.cardMarginInFeed}>
             <PostContent
+                value={value}
                 index={index}
                 modifiable={false}
                 option={option}
-                title={title}
-                price={price}
-                image={image}
-                updateEnterprise={updateEnterprise}
+                updateEnterprise={setMenuTemp}
                 openCard={openCard}
                 closeCard={closeCard}
-            >
-                {children}
-            </PostContent>
+            />
 
             {userType === "owner" &&
                 <Dialog onClose={closeCard} open={dialogCard}>
                     <PostContent
+                        value={value}
                         index={index}
                         modifiable={true}
                         option={option}
-                        title={title}
-                        price={price}
-                        image={image}
-                        updateEnterprise={updateEnterprise}
+                        updateEnterprise={setMenuTemp}
                         openCard={openCard}
                         closeCard={closeCard}
-                    >
-                        {children}
-                    </PostContent>
+                    />
                 </Dialog>
             }
         </div>
@@ -105,36 +123,36 @@ const Post = (props) => {
 };
 
 const PostContent = (props) => {
-    const { modifiable, option, title, price, image, children, updateEnterprise, openCard, closeCard, index } = props;
+    const { modifiable, option, updateEnterprise, openCard, closeCard, value } = props;
     const classes = useStyles();
-
     // 수정 버튼을 클릭했는지에 대한 state
     const [modifyMode, setModifyMode] = React.useState(false)
     const confirmEvent = () => {
         const text = {};
-        text.MNAME = tempTitle;
-        text.PRICE = tempPrice;
-        text.MCOMMENT = tempChildren;
-        updateEnterprise(option, index, image, text)
+        text.mname = tempTitle;
+        text.price = tempPrice;
+        text.mcomment = tempChildren;
+        // updateEnterprise(option, index, value.mimage, text)
+        updateEnterprise(text);
         setModifyMode(false);
         closeCard()
     }
     const cancelEvent = () => {
-        setTempTitle(title)
-        setTempPrice(price)
-        setTempChildren(children)
+        setTempTitle(value.mname)
+        setTempPrice(value.price)
+        setTempChildren(value.mcomment)
         // setTempIntroduction(enterpriseJson.INTRODUCTION)
         setModifyMode(false);
     }
     // 수정을 위한 임시 저장 state
-    const [tempTitle, setTempTitle] = React.useState(title);
-    const [tempPrice, setTempPrice] = React.useState(price);
-    const [tempChildren, setTempChildren] = React.useState(children);
-    
+    const [tempTitle, setTempTitle] = React.useState(value.mname);
+    const [tempPrice, setTempPrice] = React.useState(value.price);
+    const [tempChildren, setTempChildren] = React.useState(value.mcomment);
+
     return (
         <Card className={classes.card} onClick={modifiable ? undefined : openCard}>
             <Box style={{
-                backgroundImage: "url(" + image + ")",
+                backgroundImage: "url(" + value.mimage + ")",
                 backgroundRepeat: "no-repeat",
                 backgroundSize: "cover",
             }}
@@ -146,7 +164,7 @@ const PostContent = (props) => {
                         <Typography component={"span"} className={classes.content} gutterBottom variant="h6">
                             {!modifyMode ?
                                 <>
-                                    {title}
+                                    {value.mname}
                                 </>
                                 :
                                 <TextField
@@ -161,7 +179,7 @@ const PostContent = (props) => {
                         <Typography component={"span"} className={classes.content} variant="body2">
                             {!modifyMode ?
                                 <>
-                                    {children}
+                                    {value.mcomment}
                                 </>
                                 :
                                 <TextField
@@ -176,7 +194,7 @@ const PostContent = (props) => {
                         <Typography component={"span"} className={classes.content} variant="body2">
                             {!modifyMode ?
                                 <>
-                                    {price}
+                                    {value.price}
                                 </>
                                 :
                                 <TextField

@@ -2,6 +2,7 @@ import { Container } from "@mui/material";
 import { makeStyles } from "@mui/styles"
 import { createTheme } from "@mui/material/styles";
 import Post from "./Post";
+import Canvas from "./Canvas";
 import Inform from "./Inform";
 
 const theme = createTheme()
@@ -22,9 +23,9 @@ const Feed = (props) => {
             setImageState(temp);
         } else {
             const temp = { ...menuJson };
-            temp.menus[index].mname = text.MNAME
-            temp.menus[index].price = text.PRICE
-            temp.menus[index].mcomment = text.MCOMMENT
+            temp.menus[index].mname = text.mname
+            temp.menus[index].price = text.price
+            temp.menus[index].mcomment = text.mcomment
             setMenuState(temp);
         }
     }
@@ -43,14 +44,13 @@ const Feed = (props) => {
                             {
                                 // 갤러리 이미지 출력
                                 imageJson.images.map((value, index) => (
-                                    <Post
+                                    <Canvas
                                         key={index}
                                         index={index}
+                                        value={value}
                                         userType={userType}
                                         option="gallery"
-                                        image={value.path}
-                                        updateEnterprise={updateEnterprise} >
-                                    </Post>
+                                        updateEnterprise={updateEnterprise} />
                                 ))
                             }
                         </div>
@@ -62,15 +62,11 @@ const Feed = (props) => {
                                     "menu-" + value.mcategory === feed &&
                                     <Post
                                         key={index}
+                                        value={value}
                                         index={index}
                                         userType={userType}
                                         option="default"
-                                        title={value.mname}
-                                        price={value.price}
-                                        image={value.mimage}
-                                        updateEnterprise={updateEnterprise}>
-                                        {value.mcomment}
-                                    </Post>
+                                        updateEnterprise={updateEnterprise}/>
                                 ))
                             }
                         </div>
