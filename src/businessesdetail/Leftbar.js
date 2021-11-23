@@ -193,7 +193,6 @@ const Leftbar = (props) => {
                 {
                     window.innerWidth < 600 &&
                     <div>
-                        {console.log(window.innerWidth)}
                         <Dialog onClose={() => setMenuModal(false)} open={menuModal} style={{ minWidth: "100vw" }} className={classes.showOnMobile}>
                             <DialogTitle variant="h5" style={{ paddingBottom: "3vh", paddingTop: "5vh" }}>카테고리</DialogTitle>
                             <Box style={{ width: "50vw", marginRight: "2vw", marginLeft: "2vw", marginBottom: "5vh" }}>

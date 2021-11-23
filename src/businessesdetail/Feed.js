@@ -22,15 +22,12 @@ const Feed = (props) => {
             setImageState(temp);
         } else {
             const temp = { ...menuJson };
-            temp.menu[index].MNAME = text.MNAME
-            temp.menu[index].PRICE = text.PRICE
-            temp.menu[index].MCOMMENT = text.MCOMMENT
+            temp.menus[index].mname = text.MNAME
+            temp.menus[index].price = text.PRICE
+            temp.menus[index].mcomment = text.MCOMMENT
             setMenuState(temp);
         }
     }
-
-    // 현재 feed와 category를 출력
-    console.log("feed = " + feed)
 
     return (
         <Container className={classes.container}>
@@ -45,13 +42,13 @@ const Feed = (props) => {
                         <div>
                             {
                                 // 갤러리 이미지 출력
-                                imageJson.image.map((value, index) => (
+                                imageJson.images.map((value, index) => (
                                     <Post
                                         key={index}
                                         index={index}
                                         userType={userType}
                                         option="gallery"
-                                        image={value.PATH}
+                                        image={value.path}
                                         updateEnterprise={updateEnterprise} >
                                     </Post>
                                 ))
@@ -61,18 +58,18 @@ const Feed = (props) => {
                         <div>
                             {
                                 // 카테고리별 메뉴 출력
-                                menuJson.menu.map((value, index) => (
-                                    "menu-" + value.MCATEGORY === feed &&
+                                menuJson.menus.map((value, index) => (
+                                    "menu-" + value.mcategory === feed &&
                                     <Post
                                         key={index}
                                         index={index}
                                         userType={userType}
                                         option="default"
-                                        title={value.MNAME}
-                                        price={value.PRICE}
-                                        image={value.MIMAGE}
+                                        title={value.mname}
+                                        price={value.price}
+                                        image={value.mimage}
                                         updateEnterprise={updateEnterprise}>
-                                        {value.MCOMMENT}
+                                        {value.mcomment}
                                     </Post>
                                 ))
                             }

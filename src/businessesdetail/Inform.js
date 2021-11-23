@@ -91,22 +91,21 @@ const IntroCard = (props) => {
         closeCard()
     }
     const cancelEvent = () => {
-        setTempIntroduction(enterpriseJson.INTRODUCTION)
+        setTempIntroduction(enterpriseJson.introduction)
         setModifyMode(false);
     }
 
     // 임시 저장
-    const [tempIntroduction, setTempIntroduction] = React.useState(enterpriseJson.INTRODUCTION);
+    const [tempIntroduction, setTempIntroduction] = React.useState(enterpriseJson.introduction);
     React.useEffect(() => {
-        setTempIntroduction(enterpriseJson.INTRODUCTION)
+        setTempIntroduction(enterpriseJson.introduction)
     }, [enterpriseJson]);
-    console.log("제목 : " + tempIntroduction)
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <Card className={classes.card} onClick={modifiable ? undefined : openCard} >
                 <Box style={{
-                    backgroundImage: "url(" + enterpriseJson.EIMAGE + ")",
+                    backgroundImage: "url(" + enterpriseJson.eimage + ")",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                 }}
@@ -115,11 +114,11 @@ const IntroCard = (props) => {
                 <Box sx={{ display: 'flex', flexDirection: 'column' }} className={classes.contentBreak} >
 
                     <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography gutterBottom variant="h6">{enterpriseJson.ENAME}</Typography>
+                        <Typography gutterBottom variant="h6">{enterpriseJson.ename}</Typography>
                         {
                             !modifyMode ?
                                 <Typography variant="body2">
-                                    {enterpriseJson.INTRODUCTION}
+                                    {enterpriseJson.introduction}
                                 </Typography>
                                 :
                                 <TextField
@@ -168,21 +167,21 @@ const DetailCard = (props) => {
         resetHandler();
     }
 
-    const [open1, setOpen1] = React.useState(enterpriseJson.OPEN1);
-    const [close1, setClose1] = React.useState(enterpriseJson.CLOSE1);
-    const [open2, setOpen2] = React.useState(enterpriseJson.OPEN2);
-    const [close2, setClose2] = React.useState(enterpriseJson.CLOSE2);
-    const [email, setEmail] = React.useState(enterpriseJson.EMAIL);
-    const [phone, setPhone] = React.useState(enterpriseJson.PHONE);
+    const [open1, setOpen1] = React.useState(enterpriseJson.open1);
+    const [close1, setClose1] = React.useState(enterpriseJson.close1);
+    const [open2, setOpen2] = React.useState(enterpriseJson.open2);
+    const [close2, setClose2] = React.useState(enterpriseJson.close2);
+    const [email, setEmail] = React.useState(enterpriseJson.email);
+    const [phone, setPhone] = React.useState(enterpriseJson.phone);
 
     // 리셋 이벤트
     const resetHandler = () => {
-        setOpen1(enterpriseJson.OPEN1)
-        setClose1(enterpriseJson.CLOSE1)
-        setOpen2(enterpriseJson.OPEN2)
-        setClose2(enterpriseJson.CLOSE2)
-        setEmail(enterpriseJson.EMAIL)
-        setPhone(enterpriseJson.PHONE)
+        setOpen1(enterpriseJson.open1)
+        setClose1(enterpriseJson.close1)
+        setOpen2(enterpriseJson.open2)
+        setClose2(enterpriseJson.close2)
+        setEmail(enterpriseJson.email)
+        setPhone(enterpriseJson.phone)
     }
     // 확정 이벤트
     const confirmHandler = () => {
@@ -207,35 +206,35 @@ const DetailCard = (props) => {
                                 매장명
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.ENAME}
+                                {enterpriseJson.ename}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 도로명 주소
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.ROAD_ADDRESS}
+                                {enterpriseJson.road_address}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 지번 주소
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.JIBUN_ADDRESS}
+                                {enterpriseJson.jibun_address}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 상세 주소
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.DETAIL_ADDRESS}
+                                {enterpriseJson.detail_address}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 우편 번호
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.POSTCODE}
+                                {enterpriseJson.postcode}
                             </Typography>
 
 
@@ -250,7 +249,7 @@ const DetailCard = (props) => {
                                 사업자 등록
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.ECATEGORY}
+                                {enterpriseJson.ecategory}
                             </Typography>
 
                             <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
@@ -261,7 +260,7 @@ const DetailCard = (props) => {
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
                                 {!modifyMode ?
                                     <>
-                                        {enterpriseJson.OPEN1} ~ {enterpriseJson.CLOSE1}
+                                        {enterpriseJson.open1} ~ {enterpriseJson.close1}
                                     </>
                                     :
                                     <>
@@ -288,7 +287,7 @@ const DetailCard = (props) => {
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
                                 {!modifyMode ?
                                     <>
-                                        {enterpriseJson.OPEN2} ~ {enterpriseJson.CLOSE2}
+                                        {enterpriseJson.open2} ~ {enterpriseJson.close2}
                                     </>
                                     :
                                     <>
@@ -315,7 +314,7 @@ const DetailCard = (props) => {
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
                                 {!modifyMode ?
-                                    <>{enterpriseJson.EMAIL}</>
+                                    <>{enterpriseJson.email}</>
                                     :
                                     <TextField
                                         label="이메일"
@@ -331,7 +330,7 @@ const DetailCard = (props) => {
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
                             {!modifyMode ?
-                                    <>{enterpriseJson.PHONE}</>
+                                    <>{enterpriseJson.phone}</>
                                     :
                                     <TextField
                                         label="연락처"
@@ -371,13 +370,10 @@ const Inform = (props) => {
     const [firstCard, setFirstCard] = React.useState(false);
     const [secondCard, setSecondCard] = React.useState(false);
 
-    const openFirstCard = () => { console.log("open1st"); setFirstCard(true) };
-    const closeFirstCard = () => { console.log("close1st"); setFirstCard(false) };
-    const openSecondCard = () => { console.log("open2nd"); setSecondCard(true) };
-    const closeSecondCard = () => { console.log("close2nd"); setSecondCard(false) };
-
-    console.log("first= " + firstCard)
-    console.log("second= " + secondCard)
+    const openFirstCard = () => { setFirstCard(true) };
+    const closeFirstCard = () => { setFirstCard(false) };
+    const openSecondCard = () => { setSecondCard(true) };
+    const closeSecondCard = () => { setSecondCard(false) };
 
     return (
         <div>

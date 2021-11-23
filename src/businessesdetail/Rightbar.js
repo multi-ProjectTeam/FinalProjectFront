@@ -35,11 +35,11 @@ const RightBar = (props) => {
         갤러리
       </Typography>
       <ImageList cols={3} style={{ marginBottom: 20, marginTop: 10 }} onClick={()=>setFeed("Gallery")}>
-        {imageJson.image.slice(0,9).map((value, index) => (
+        {imageJson.images.slice(0,9).map((value, index) => (
           <ImageListItem key={index}>
             <img
-              src={`${value.PATH}?w=164&h=164&fit=crop&auto=format`}
-              srcSet={`${value.PATH}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
+              src={`${value.path}?w=164&h=164&fit=crop&auto=format`}
+              srcSet={`${value.path}?w=164&h=164&fit=crop&auto=format&dpr=2 2x`}
               alt={index}
               loading="lazy"
             />

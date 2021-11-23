@@ -64,9 +64,8 @@ const Post = (props) => {
     const classes = useStyles();
 
     const [dialogCard, setDialogCard] = React.useState(false);
-    const openCard = () => { console.log("openCard"); setDialogCard(true) };
-    const closeCard = () => { console.log("closeCard"); setDialogCard(false) };
-    console.log(dialogCard)
+    const openCard = () => { setDialogCard(true) };
+    const closeCard = () => { setDialogCard(false) };
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }} className={classes.cardMarginInFeed}>
@@ -131,9 +130,7 @@ const PostContent = (props) => {
     const [tempTitle, setTempTitle] = React.useState(title);
     const [tempPrice, setTempPrice] = React.useState(price);
     const [tempChildren, setTempChildren] = React.useState(children);
-    console.log(tempChildren)
-
-    console.log(modifiable)
+    
     return (
         <Card className={classes.card} onClick={modifiable ? undefined : openCard}>
             <Box style={{
