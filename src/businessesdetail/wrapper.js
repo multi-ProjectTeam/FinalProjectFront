@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid } from "@mui/material";
+import { Button, formControlClasses, Grid } from "@mui/material";
 import Feed from "./Feed";
 import Leftbar from "./Leftbar";
 import Navbar from "./Navbar";
@@ -7,7 +7,8 @@ import RightBar from "./Rightbar";
 // import "./global.css";
 import { makeStyles } from "@mui/styles"
 import { createTheme } from "@mui/material/styles";
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
+import superagent from "superagent";
 
 
 const theme = createTheme()
@@ -23,11 +24,7 @@ const useStyles = makeStyles(() => ({
 const Wrapper = (props) => {
     const { userType } = props;
     const classes = useStyles();
-    const {enterpriseCode} = useParams();
-    console.log("enterpriseCode = " + enterpriseCode);
 
-    // 현재 피드에 띄우는 컴포넌트를 선택하기 위한 state
-    const [feed, setFeed] = React.useState("Information");
 
     // 더미 데이터
     const categoryJson = { "category": ["coffee", "sandwich", "cookie"] };
@@ -95,11 +92,36 @@ const Wrapper = (props) => {
     const [imageState, setImageState] = React.useState(imageJson);
 
 
+
+    // 현재 피드에 띄우는 컴포넌트를 선택하기 위한 state
+    const [feed, setFeed] = React.useState("Information");
+
+    // 해당 컴포넌트에 접근했을 때, 처음 실행되는 코드
+    const { enterpriseCode } = useParams();
+    // console.log("안녕하세요~! useParams입니다. " + enterpriseCode);
+    const [testNum, setTestNum] = React.useState(0);
+
+    
+    React.useEffect(() => {
+        console.log("한번만 실행됩니까? : " + testNum);
+        setTestNum(Number(enterpriseCode) + 1);
+        const url = "http://118.67.142.194:8080";
+        superagent.get(url + "/enterprise/5")
+        .end( (err,res) =>{
+            console.log("텍스트 : " + res.text);
+            console.log("결과값 : " + JSON.parse(res.text).introduction);
+        } )
+    }, [enterpriseCode])
+    
+
     return (
         !enterpriseState || !menuState || !imageState ?
             <div></div>
             :
             <div>
+                // 테스트를 위해 넣은 버튼. 차후에 제거해야함
+                <Link to={"/businesses/" + testNum} ><Button style={{ marginTop: theme.spacing(10) }}>다음으로 넘어가기 : {testNum}</Button></Link>
+
                 <Navbar ENAME={enterpriseState.ENAME} />
                 <Grid container>
                     <Grid item lg={2} sm={3} xs={2}>
