@@ -45,18 +45,19 @@ const Wrapper = (props) => {
     const { enterpriseCode } = useParams();
 
     React.useEffect(() => {
-        GETfromServer();
-    }, [enterpriseCode])
-
-    const GETfromServer = () => {
-        setFeed("Information");
+        console.log("가져오기 실행");
         const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode;
-
         GETenterprise(url);
         GETcategories(url);
         GETmenus(url);
         GETimages(url);
-    };
+    }, [enterpriseCode])
+
+    React.useEffect( () => {
+        setFeed("Information");
+    }, [enterpriseCode] )
+
+    
     const GETenterprise = (url) => superagent.get(url).end((err, res) => { setEnterpriseState(JSON.parse(res.text)); });
     const GETcategories = (url) => superagent.get(url + "/categories").end((err, res) => { setCategoryState(JSON.parse(res.text)); });
     const GETmenus = (url) => superagent.get(url + "/menus").end((err, res) => { setMenuState(JSON.parse(res.text)); });
@@ -64,7 +65,6 @@ const Wrapper = (props) => {
 
     // enterprise를 수정했을 때, PUT 요청을 보내는 함수
     React.useEffect(() => {
-        console.log("PUT Enterprise");
         const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode;
         // 처음 화면을 띄웠을 때는 실행하지 않는다.
         if (enterpriseTemp) {
@@ -72,13 +72,8 @@ const Wrapper = (props) => {
                 .set('Content-Type', 'application/json')
                 .send(enterpriseTemp)
                 .end((err, res) => {
-                    console.log(JSON.parse(res.text).status);
-                    console.log(enterpriseTemp);
                     if (!err && JSON.parse(res.text).status) {
                         setEnterpriseState(enterpriseTemp)
-                        console.log("Complete");
-                    } else {
-                        console.log("Error");
                     }
                 })
         }

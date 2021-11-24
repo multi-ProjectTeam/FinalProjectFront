@@ -4,6 +4,8 @@ import { createTheme } from "@mui/material/styles";
 import Post from "./Post";
 import Canvas from "./Canvas";
 import Inform from "./Inform";
+import superagent from "superagent"
+import { useParams } from "react-router";
 
 const theme = createTheme()
 const useStyles = makeStyles(() => ({
@@ -29,6 +31,32 @@ const Feed = (props) => {
             setMenuState(temp);
         }
     }
+    const {enterpriseCode} = useParams();
+    // 갤러리+메뉴 삭제 함수
+    const removeList = (option, index, code) => {
+        if(option === "Gallery"){
+            superagent
+            .delete("http://118.67.142.194:8080/enterprise/" + enterpriseCode + "/image/" + code )
+            .end( (err,res) => {
+                console.log(err);
+                console.log(res);
+                const temp = {...imageJson}
+                temp.images.splice(index, 1);
+                setImageState(temp)
+            } )
+            
+        }else if(option==="Menu") {
+            superagent
+            .delete("http://118.67.142.194:8080/enterprise/" + enterpriseCode + "/menu/" + code )
+            .end( (err,res) => {
+                console.log(err);
+                console.log(res);
+                const temp = {...menuJson}
+                temp.menus.splice(index, 1);
+                setMenuState(temp)
+            } )
+        }
+    }
 
     return (
         <Container className={classes.container}>
@@ -50,6 +78,7 @@ const Feed = (props) => {
                                         value={value}
                                         userType={userType}
                                         option="gallery"
+                                        removeList={removeList}
                                         updateEnterprise={updateEnterprise} />
                                 ))
                             }
@@ -66,6 +95,7 @@ const Feed = (props) => {
                                         index={index}
                                         userType={userType}
                                         option="default"
+                                        removeList={removeList}
                                         updateEnterprise={updateEnterprise}/>
                                 ))
                             }
