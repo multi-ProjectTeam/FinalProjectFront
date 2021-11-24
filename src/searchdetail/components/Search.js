@@ -1,6 +1,6 @@
 import { BsXLg,BsSearch } from "react-icons/bs";
 import {useState, useRef, useEffect} from "react";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 import '../css/Search.css';
 import Microphone from './Microphone';
@@ -8,8 +8,16 @@ import Microphone from './Microphone';
 function Search({search,state}) {
     const [keyword,setKeyword] = useState(search);
     const [keywordState,setKeywordState] = useState(true);
+    const navigate = useNavigate();
     const divRef = useRef();
+    const linkRef = useRef();
 
+    const onKeyPress = (event) =>{
+        if(event.key === 'Enter'){
+            state(true);
+            navigate(`/enterprises?search=${keyword}`);
+        }
+    };
     const onClick = () =>{
         state(true);
     };
@@ -32,15 +40,15 @@ function Search({search,state}) {
     return (
         <div id="searchBox" ref={divRef}>
             <div id="searchText">
-                <input type="text" value={keyword} onChange={onChange}/>
+                <input type="text" value={keyword} onChange={onChange} onKeyPress={onKeyPress}/>
             </div>
             <div id={keywordState ? "resetInactive":"reset"}>
                 <BsXLg onClick={clickReset}/>
             </div>
             <div id={keywordState ? "barrierInactive":"barrierActive"}></div>
-            <Microphone setKeyword={setKeyword} keywordState={keywordState}/>
+                <Microphone setKeyword={setKeyword} keywordState={keywordState}/>
             <div id="searchIcon">
-                <Link id="linkSearch" to={`/enterprises?search=${keyword}`} onClick={onClick}><BsSearch id="searchIcon"/></Link>
+                <Link ref={linkRef} id="linkSearch" to={`/enterprises?search=${keyword}`} onClick={onClick}><BsSearch id="searchIcon"/></Link>
             </div>
         </div>
     );

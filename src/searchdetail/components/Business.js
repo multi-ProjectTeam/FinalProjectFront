@@ -25,10 +25,10 @@ function Business({business, references}) {
     useEffect(()=>{
         references.current.push(elementRef);
     },[]);
-
+    
     return (
         <div className={styles.wrap}>
-            <Info direction={directionRef.current} infoState={infoState} content={business.ename}/>
+            <Info direction={directionRef.current} infoState={infoState} content={business}/>
             <div ref={elementRef} className={styles.imgBox} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onWheel={onWheel}>
               <img className={styles.img} src={business.eimage} alt={business.ename}/>
             </div>
@@ -48,9 +48,10 @@ function Business({business, references}) {
                   placement={placement}
                   overlay={
                     <Popover id={`popover-positioned-${placement}`}>
-                      <Popover.Header as="h3">{`Popover ${placement}`}</Popover.Header>
+                      <Popover.Header as="h3">좌석 현황</Popover.Header>
                       <Popover.Body>
-                        <strong>Holy guacamole!</strong> Check this info.
+                        <div><strong>전체좌석: </strong>{business.seat} </div>
+                        <div><strong>이용좌석: </strong>{business.occupied}</div>
                       </Popover.Body>
                     </Popover>
                   }

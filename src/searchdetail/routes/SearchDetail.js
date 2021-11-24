@@ -30,7 +30,6 @@ function SearchDetail() {
     const isMobile = useMediaQuery({ maxWidth: 767 });
 
     const getBusinesses = async () => {
-        console.log(keyword.current);
         const json = await axios({
             url: `http://118.67.142.194:8080/enterprises?q=${keyword.current}&option=${option.current}`,
             method: 'GET'
