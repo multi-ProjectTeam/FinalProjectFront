@@ -34,9 +34,9 @@ const useStyles = makeStyles(() => ({
             width: "50%",
             minHeight: "300px",
             maxWidth: "300px",
-            [theme.breakpoints.up("lg")]: {
-                Width: "200px",
-            },
+            // [theme.breakpoints.up("lg")]: {
+            //     Width: "200px",
+            // },
         },
     },
     gallery: {
@@ -47,10 +47,11 @@ const useStyles = makeStyles(() => ({
     },
     contentBreak: {
         [theme.breakpoints.up("sm")]: {
+            width: "50%"
             // width: "50vw",
-            [theme.breakpoints.down("lg")]: {
-                width: "50%"
-            },
+            // [theme.breakpoints.down("lg")]: {
+            //     width: "50%"
+            // },
         },
     },
     inform: {

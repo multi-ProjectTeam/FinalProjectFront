@@ -6,8 +6,8 @@ function App() {
   return (
     <Router>
       <Routes>
-        <Route exact path="/businesses"                 element={<SearchDetail />} />
-        <Route exact path="/businesses/:enterpriseCode" element={<Wrapper userType="owner" />} />
+        <Route exact path="/enterprises"                 element={<SearchDetail />} />
+        <Route exact path="/enterprises/:enterpriseCode" element={<Wrapper userType="owner" />} />
       </Routes>
     </Router>
   );

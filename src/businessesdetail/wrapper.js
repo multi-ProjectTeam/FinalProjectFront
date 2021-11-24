@@ -44,7 +44,6 @@ const Wrapper = (props) => {
     // 해당 컴포넌트에 접근했을 때, 처음 실행되는 코드
     const { enterpriseCode } = useParams();
 
-
     React.useEffect(() => {
         GETfromServer();
     }, [enterpriseCode])
@@ -53,11 +52,15 @@ const Wrapper = (props) => {
         setFeed("Information");
         const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode;
 
-        superagent.get(url).end((err, res) => { setEnterpriseState(JSON.parse(res.text)); });
-        superagent.get(url + "/categories").end((err, res) => { setCategoryState(JSON.parse(res.text)); });
-        superagent.get(url + "/menus").end((err, res) => { setMenuState(JSON.parse(res.text)); });
-        superagent.get(url + "/images").end((err, res) => { setImageState(JSON.parse(res.text)); });
+        GETenterprise(url);
+        GETcategories(url);
+        GETmenus(url);
+        GETimages(url);
     };
+    const GETenterprise = (url) => superagent.get(url).end((err, res) => { setEnterpriseState(JSON.parse(res.text)); });
+    const GETcategories = (url) => superagent.get(url + "/categories").end((err, res) => { setCategoryState(JSON.parse(res.text)); });
+    const GETmenus = (url) => superagent.get(url + "/menus").end((err, res) => { setMenuState(JSON.parse(res.text)); });
+    const GETimages = (url) => superagent.get(url + "/images").end((err, res) => { setImageState(JSON.parse(res.text)); });
 
     // enterprise를 수정했을 때, PUT 요청을 보내는 함수
     React.useEffect(() => {
@@ -71,10 +74,10 @@ const Wrapper = (props) => {
                 .end((err, res) => {
                     console.log(JSON.parse(res.text).status);
                     console.log(enterpriseTemp);
-                    if (!err && JSON.parse(res.text).status ){
+                    if (!err && JSON.parse(res.text).status) {
                         setEnterpriseState(enterpriseTemp)
                         console.log("Complete");
-                    }else{
+                    } else {
                         console.log("Error");
                     }
                 })
@@ -87,13 +90,15 @@ const Wrapper = (props) => {
             :
             <div>
                 // 테스트를 위해 넣은 버튼. 차후에 제거해야함
-                <Link to={"/businesses/" + (Number(enterpriseCode)-1)} ><Button style={{ marginTop: theme.spacing(10) }}>이전으로 돌아가기</Button></Link>
-                <Link to={"/businesses/" + (Number(enterpriseCode)+1)} ><Button style={{ marginTop: theme.spacing(10) }}>다음으로 넘어가기</Button></Link>
+                <Link to={"/enterprises/" + (Number(enterpriseCode) - 1)} ><Button style={{ marginTop: theme.spacing(10) }}>이전으로 돌아가기</Button></Link>
+                <Link to={"/enterprises/" + (Number(enterpriseCode) + 1)} ><Button style={{ marginTop: theme.spacing(10) }}>다음으로 넘어가기</Button></Link>
 
                 <Navbar ENAME={enterpriseState.ename} />
                 <Grid container>
                     <Grid item lg={2} sm={3} xs={2}>
-                        <Leftbar setFeed={setFeed} userType={userType} categoryList={categoryState.categories} />
+                        <Leftbar setFeed={setFeed} userType={userType}
+                            categoryList={categoryState.categories}
+                        />
                     </Grid>
                     <Grid item lg={7} sm={6} xs={10}>
                         <Feed feed={feed} userType={userType}

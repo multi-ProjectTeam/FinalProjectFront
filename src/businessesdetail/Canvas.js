@@ -24,7 +24,7 @@ const useStyles = makeStyles(() => ({
         },
         [theme.breakpoints.up("sm")]: {
             display: 'flex',
-            width: "50vw",
+            // width: "50vw",
         },
     },
     content: {
