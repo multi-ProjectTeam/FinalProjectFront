@@ -32,7 +32,7 @@ function SearchDetail() {
     const getBusinesses = async () => {
         console.log(keyword.current);
         const json = await axios({
-            url: `http://localhost:8080/enterprises?q=${keyword.current}&option=${option.current}`,
+            url: `http://118.67.142.194:8080/enterprises?q=${keyword.current}&option=${option.current}`,
             method: 'GET'
         });
         dataRef.current = json.data;
@@ -82,7 +82,7 @@ function SearchDetail() {
     return (
         <div className={styles.wrap}>
             {isMobile ? <MenuButton search={keyword.current} state={setRedirect}/> : null}
-            <Header search={keyword.current}/>
+            <Header search={keyword.current} state={setRedirect}/>
             <nav id={styles.nav}>
                 <Navigation search={keyword.current} state={setRedirect}/>
             </nav>

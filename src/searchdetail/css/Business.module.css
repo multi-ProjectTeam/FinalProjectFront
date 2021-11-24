@@ -10,6 +10,7 @@
     display:flex;
     flex-direction: column;
     justify-content: center;
+    width:30%;
 }
 .seatAvailable{
     width: 10%;
@@ -35,6 +36,10 @@ link:hover{
 .img{
     width: 200px;
     height: 150px;
+}
+.addressText{
+    display: flex;
+    flex-wrap:wrap;
 }
 @media screen and (max-width:767px){
     .wrap{

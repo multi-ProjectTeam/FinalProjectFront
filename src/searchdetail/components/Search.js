@@ -5,10 +5,14 @@ import {Link} from "react-router-dom";
 import '../css/Search.css';
 import Microphone from './Microphone';
 
-function Search({search}) {
+function Search({search,state}) {
     const [keyword,setKeyword] = useState(search);
     const [keywordState,setKeywordState] = useState(true);
     const divRef = useRef();
+
+    const onClick = () =>{
+        state(true);
+    };
     const onChange = (event) => {
         setKeyword(event.target.value);
     }
@@ -36,7 +40,7 @@ function Search({search}) {
             <div id={keywordState ? "barrierInactive":"barrierActive"}></div>
             <Microphone setKeyword={setKeyword} keywordState={keywordState}/>
             <div id="searchIcon">
-                <Link id="linkSearch" to={`/businesses?search=${keyword}`}><BsSearch id="searchIcon"/></Link>
+                <Link id="linkSearch" to={`/enterprises?search=${keyword}`} onClick={onClick}><BsSearch id="searchIcon"/></Link>
             </div>
         </div>
     );

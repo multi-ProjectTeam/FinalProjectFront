@@ -30,13 +30,14 @@ function Business({business, references}) {
         <div className={styles.wrap}>
             <Info direction={directionRef.current} infoState={infoState} content={business.ename}/>
             <div ref={elementRef} className={styles.imgBox} onMouseOver={onMouseOver} onMouseOut={onMouseOut} onWheel={onWheel}>
-              <img className={styles.img} src={`http://localhost:8090/boot/businesses/images/${business.eimage}`} alt={business.ename}/>
+              <img className={styles.img} src={business.eimage} alt={business.ename}/>
             </div>
               <div className={styles.textBox}>
-                <Link to={`/business/${business.eno}`} className={styles.link}>
+                <Link to={`/enterprises/${business.eno}`} className={styles.link}>
                   <div className={styles.linkText}>{business.ename}</div>
                 </Link>
-                <div>{`${business.road_address} ${business.detail_address}`}</div>
+                <div className={styles.addressText}>{business.road_address}</div>
+                <div className={styles.addressText}>{business.detail_address}</div>
               </div>
             <div className={styles.seatAvailable}>
             <>
