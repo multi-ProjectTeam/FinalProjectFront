@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Grid } from "@mui/material";
+import { Grid } from "@mui/material";
 import Feed from "./Feed";
 import Leftbar from "./Leftbar";
 import Navbar from "./Navbar";
@@ -7,7 +7,7 @@ import RightBar from "./Rightbar";
 // import "./global.css";
 import { makeStyles } from "@mui/styles"
 import { createTheme } from "@mui/material/styles";
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import superagent from "superagent";
 
 
@@ -45,7 +45,6 @@ const Wrapper = (props) => {
     const { enterpriseCode } = useParams();
 
     React.useEffect(() => {
-        console.log("가져오기 실행");
         const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode;
         GETenterprise(url);
         GETcategories(url);
@@ -84,10 +83,6 @@ const Wrapper = (props) => {
             <div></div>
             :
             <div>
-                // 테스트를 위해 넣은 버튼. 차후에 제거해야함
-                <Link to={"/enterprises/" + (Number(enterpriseCode) - 1)} ><Button style={{ marginTop: theme.spacing(10) }}>이전으로 돌아가기</Button></Link>
-                <Link to={"/enterprises/" + (Number(enterpriseCode) + 1)} ><Button style={{ marginTop: theme.spacing(10) }}>다음으로 넘어가기</Button></Link>
-
                 <Navbar ENAME={enterpriseState.ename} />
                 <Grid container>
                     <Grid item lg={2} sm={3} xs={2}>

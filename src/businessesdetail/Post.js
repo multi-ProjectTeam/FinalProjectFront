@@ -85,8 +85,7 @@ const Post = (props) => {
                 })
         }
     }, [menuTemp])
-    console.log("index = " + index);
-    console.log(value);
+
     return (
         <div style={{ display: "flex", justifyContent: "center" }} className={classes.cardMarginInFeed}>
             <PostContent
@@ -144,15 +143,19 @@ const PostContent = (props) => {
     const [tempTitle, setTempTitle] = React.useState(value.mname);
     const [tempPrice, setTempPrice] = React.useState(value.price);
     const [tempChildren, setTempChildren] = React.useState(value.mcomment);
-
+    
     return (
         <Card className={classes.card} onClick={modifiable ? undefined : openCard}>
-            <Box style={{
-                backgroundImage: "url(" + value.mimage + ")",
-                backgroundRepeat: "no-repeat",
-                backgroundSize: "cover",
-            }}
-                className={option === "gallery" ? classes.gallery : classes.imageBreak} />
+            {
+                value.mimage !== "" && 
+                <Box style={{
+                    backgroundImage: "url(" + value.mimage + ")",
+                    backgroundRepeat: "no-repeat",
+                    backgroundSize: "cover",
+                }}
+                    className={option === "gallery" ? classes.gallery : classes.imageBreak} />
+            }
+            
 
             {option !== "gallery" &&
                 <Box sx={{ display: 'flex', flexDirection: 'column' }} className={classes.contentBreak} >

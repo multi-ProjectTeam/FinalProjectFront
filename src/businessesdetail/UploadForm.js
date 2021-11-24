@@ -50,6 +50,7 @@ const UploadForm = (props) => {
     }
 
     const resetExitHandler = () => {
+        setOpenPostModal(false);
         setSelectedFile();
         setCategory();
         setCustomCategory();
@@ -57,7 +58,6 @@ const UploadForm = (props) => {
         setMenuComment();
         setMenuPrice();
         setOption();
-        setOpenPostModal(false);
     }
 
     const fileUploadHandler = () => {
