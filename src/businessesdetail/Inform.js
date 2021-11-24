@@ -34,9 +34,9 @@ const useStyles = makeStyles(() => ({
             width: "50%",
             minHeight: "300px",
             maxWidth: "300px",
-            [theme.breakpoints.up("lg")]: {
-                Width: "200px",
-            },
+            // [theme.breakpoints.up("lg")]: {
+            //     Width: "200px",
+            // },
         },
     },
     gallery: {
@@ -47,10 +47,11 @@ const useStyles = makeStyles(() => ({
     },
     contentBreak: {
         [theme.breakpoints.up("sm")]: {
+            width: "50%"
             // width: "50vw",
-            [theme.breakpoints.down("lg")]: {
-                width: "50%"
-            },
+            // [theme.breakpoints.down("lg")]: {
+            //     width: "50%"
+            // },
         },
     },
     inform: {
@@ -85,28 +86,27 @@ const IntroCard = (props) => {
     const [modifyMode, setModifyMode] = React.useState(false)
     const confirmEvent = () => {
         const temp = { ...enterpriseJson }
-        temp.INTRODUCTION = tempIntroduction
+        temp.introduction = tempIntroduction
         setEnterpriseJson(temp)
         setModifyMode(false);
         closeCard()
     }
     const cancelEvent = () => {
-        setTempIntroduction(enterpriseJson.INTRODUCTION)
+        setTempIntroduction(enterpriseJson.introduction)
         setModifyMode(false);
     }
 
     // 임시 저장
-    const [tempIntroduction, setTempIntroduction] = React.useState(enterpriseJson.INTRODUCTION);
+    const [tempIntroduction, setTempIntroduction] = React.useState(enterpriseJson.introduction);
     React.useEffect(() => {
-        setTempIntroduction(enterpriseJson.INTRODUCTION)
+        setTempIntroduction(enterpriseJson.introduction)
     }, [enterpriseJson]);
-    console.log("제목 : " + tempIntroduction)
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <Card className={classes.card} onClick={modifiable ? undefined : openCard} >
                 <Box style={{
-                    backgroundImage: "url(" + enterpriseJson.EIMAGE + ")",
+                    backgroundImage: "url(" + enterpriseJson.eimage + ")",
                     backgroundRepeat: "no-repeat",
                     backgroundSize: "cover",
                 }}
@@ -115,11 +115,11 @@ const IntroCard = (props) => {
                 <Box sx={{ display: 'flex', flexDirection: 'column' }} className={classes.contentBreak} >
 
                     <CardContent sx={{ flex: '1 0 auto' }}>
-                        <Typography gutterBottom variant="h6">{enterpriseJson.ENAME}</Typography>
+                        <Typography component={'div'} gutterBottom variant="h6">{enterpriseJson.ename}</Typography>
                         {
                             !modifyMode ?
-                                <Typography variant="body2">
-                                    {enterpriseJson.INTRODUCTION}
+                                <Typography component={'div'} variant="body2">
+                                    {enterpriseJson.introduction}
                                 </Typography>
                                 :
                                 <TextField
@@ -168,31 +168,31 @@ const DetailCard = (props) => {
         resetHandler();
     }
 
-    const [open1, setOpen1] = React.useState(enterpriseJson.OPEN1);
-    const [close1, setClose1] = React.useState(enterpriseJson.CLOSE1);
-    const [open2, setOpen2] = React.useState(enterpriseJson.OPEN2);
-    const [close2, setClose2] = React.useState(enterpriseJson.CLOSE2);
-    const [email, setEmail] = React.useState(enterpriseJson.EMAIL);
-    const [phone, setPhone] = React.useState(enterpriseJson.PHONE);
+    const [open1, setOpen1] = React.useState(enterpriseJson.open1);
+    const [close1, setClose1] = React.useState(enterpriseJson.close1);
+    const [open2, setOpen2] = React.useState(enterpriseJson.open2);
+    const [close2, setClose2] = React.useState(enterpriseJson.close2);
+    const [email, setEmail] = React.useState(enterpriseJson.email);
+    const [phone, setPhone] = React.useState(enterpriseJson.phone);
 
     // 리셋 이벤트
     const resetHandler = () => {
-        setOpen1(enterpriseJson.OPEN1)
-        setClose1(enterpriseJson.CLOSE1)
-        setOpen2(enterpriseJson.OPEN2)
-        setClose2(enterpriseJson.CLOSE2)
-        setEmail(enterpriseJson.EMAIL)
-        setPhone(enterpriseJson.PHONE)
+        setOpen1(enterpriseJson.open1)
+        setClose1(enterpriseJson.close1)
+        setOpen2(enterpriseJson.open2)
+        setClose2(enterpriseJson.close2)
+        setEmail(enterpriseJson.email)
+        setPhone(enterpriseJson.phone)
     }
     // 확정 이벤트
     const confirmHandler = () => {
         const temp = { ...enterpriseJson }
-        temp.OPEN1 = open1;
-        temp.CLOSE1 = close1;
-        temp.OPEN2 = open2;
-        temp.CLOSE2 = close2
-        temp.EMAIL = email
-        temp.PHONE = phone
+        temp.open1 = open1;
+        temp.close1 = close1;
+        temp.open2 = open2;
+        temp.close2 = close2
+        temp.email = email
+        temp.phone = phone
         setEnterpriseJson(temp)
     }
 
@@ -203,39 +203,39 @@ const DetailCard = (props) => {
                     <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 0 auto' }} className={classes.contentBreak} >
                         <CardContent sx={{ flex: '1 0 auto' }}>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 매장명
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.ENAME}
+                                {enterpriseJson.ename}
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 도로명 주소
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.ROAD_ADDRESS}
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
+                                {enterpriseJson.road_address}
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 지번 주소
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.JIBUN_ADDRESS}
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
+                                {enterpriseJson.jibun_address}
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 상세 주소
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.DETAIL_ADDRESS}
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
+                                {enterpriseJson.detail_address}
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 우편 번호
                             </Typography>
                             <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.POSTCODE}
+                                {enterpriseJson.postcode}
                             </Typography>
 
 
@@ -246,22 +246,22 @@ const DetailCard = (props) => {
                     <Box sx={{ display: 'flex', flexDirection: 'column', flex: '1 0 auto' }} className={classes.contentBreak} >
                         <CardContent sx={{ flex: '1 0 auto' }}>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 사업자 등록
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
-                                {enterpriseJson.ECATEGORY}
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
+                                {enterpriseJson.ecategory}
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 주중 영업 시간
                             </Typography>
 
 
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
                                 {!modifyMode ?
                                     <>
-                                        {enterpriseJson.OPEN1} ~ {enterpriseJson.CLOSE1}
+                                        {enterpriseJson.open1} ~ {enterpriseJson.close1}
                                     </>
                                     :
                                     <>
@@ -282,13 +282,13 @@ const DetailCard = (props) => {
                                 }
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 주말 영업 시간
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
                                 {!modifyMode ?
                                     <>
-                                        {enterpriseJson.OPEN2} ~ {enterpriseJson.CLOSE2}
+                                        {enterpriseJson.open2} ~ {enterpriseJson.close2}
                                     </>
                                     :
                                     <>
@@ -310,12 +310,12 @@ const DetailCard = (props) => {
 
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 이메일
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
                                 {!modifyMode ?
-                                    <>{enterpriseJson.EMAIL}</>
+                                    <>{enterpriseJson.email}</>
                                     :
                                     <TextField
                                         label="이메일"
@@ -326,12 +326,12 @@ const DetailCard = (props) => {
                                 }
                             </Typography>
 
-                            <Typography gutterBottom variant="h6" sx={{ mb: 0 }}>
+                            <Typography component={'div'} gutterBottom variant="h6" sx={{ mb: 0 }}>
                                 연락처
                             </Typography>
-                            <Typography variant="body2" sx={{ mt: 0, mb: 2 }}>
+                            <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
                             {!modifyMode ?
-                                    <>{enterpriseJson.PHONE}</>
+                                    <>{enterpriseJson.phone}</>
                                     :
                                     <TextField
                                         label="연락처"
@@ -371,13 +371,10 @@ const Inform = (props) => {
     const [firstCard, setFirstCard] = React.useState(false);
     const [secondCard, setSecondCard] = React.useState(false);
 
-    const openFirstCard = () => { console.log("open1st"); setFirstCard(true) };
-    const closeFirstCard = () => { console.log("close1st"); setFirstCard(false) };
-    const openSecondCard = () => { console.log("open2nd"); setSecondCard(true) };
-    const closeSecondCard = () => { console.log("close2nd"); setSecondCard(false) };
-
-    console.log("first= " + firstCard)
-    console.log("second= " + secondCard)
+    const openFirstCard = () => { setFirstCard(true) };
+    const closeFirstCard = () => { setFirstCard(false) };
+    const openSecondCard = () => { setSecondCard(true) };
+    const closeSecondCard = () => { setSecondCard(false) };
 
     return (
         <div>

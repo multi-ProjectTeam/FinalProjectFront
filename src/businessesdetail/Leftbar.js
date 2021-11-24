@@ -8,6 +8,7 @@ import PhotoLibraryIcon from '@mui/icons-material/PhotoLibrary';
 import { createTheme } from "@mui/material/styles";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
+import UploadForm from "./UploadForm";
 
 const theme = createTheme()
 const useStyles = makeStyles(() => ({
@@ -84,7 +85,12 @@ const MenuCategory = (props) => {
 };
 
 const AdminCategory = (props) => {
-    const { onClick } = props;
+    const { onClick, setOpenPostModal, setPostOption } = props;
+    const adminOnClickHandler = (option) => {
+        onClick(false);
+        setOpenPostModal(true);
+        setPostOption(option);
+    }
     return (
         <List component="div" disablePadding
             sx={{
@@ -94,13 +100,13 @@ const AdminCategory = (props) => {
                 },
             }}
             style={{ maxHeight: "30vh", overflow: "auto" }}>
-            <ListItemButton onClick={() => onClick(false)}>
+            <ListItemButton onClick={() => adminOnClickHandler("menu")}>
                 <Typography variant="body2">메뉴생성</Typography>
             </ListItemButton>
-            <ListItemButton onClick={() => onClick(false)}>
+            <ListItemButton onClick={() => adminOnClickHandler("gallery")}>
                 <Typography variant="body2">갤러리생성</Typography>
             </ListItemButton>
-            <ListItemButton onClick={() => onClick(false)}>
+            <ListItemButton >
                 <Typography variant="body2">결제시스템</Typography>
             </ListItemButton>
         </List>
@@ -108,7 +114,7 @@ const AdminCategory = (props) => {
 };
 
 const Leftbar = (props) => {
-    const { setFeed, userType, categoryList } = props;
+    const { setFeed, userType, categoryList} = props;
     const classes = useStyles();
     // 선택지에서 "메뉴"를 클릭하면 하위 선택지가 나오도록 하기 위한 state / event
     const [menuOpen, setMenuOpen] = React.useState(false);
@@ -133,9 +139,20 @@ const Leftbar = (props) => {
     // 관리자 모달을 띄우기 위한 state
     const [adminModal, setAdminModal] = React.useState(false);
 
+    // 업로드 폼을 띄우기 위한 state
+    const [openPostModal, setOpenPostModal] = React.useState(false);
+    const [postOption, setPostOption] = React.useState();
 
     return (
         <Container className={classes.container}>
+
+            {/* 업로드(POST) 모달을 띄우는 컴포넌트 */}
+            <UploadForm categories={categoryList}
+                openPostModal={openPostModal}
+                option={postOption}
+                setOption={setPostOption}
+                setOpenPostModal={setOpenPostModal}/>
+
             <List component="nav">
 
                 <ListItemButton onClick={() => setFeed("Information")} sx={{ padding: 0 }} className={classes.item}>
@@ -187,13 +204,12 @@ const Leftbar = (props) => {
 
 
                 <Collapse in={adminOpen} timeout="auto" unmountOnExit className={classes.hideOnMobile}>
-                    <AdminCategory onClick={setAdminModal} />
+                    <AdminCategory onClick={setAdminModal} setOpenPostModal={setOpenPostModal} setPostOption={setPostOption} />
                 </Collapse>
 
                 {
                     window.innerWidth < 600 &&
                     <div>
-                        {console.log(window.innerWidth)}
                         <Dialog onClose={() => setMenuModal(false)} open={menuModal} style={{ minWidth: "100vw" }} className={classes.showOnMobile}>
                             <DialogTitle variant="h5" style={{ paddingBottom: "3vh", paddingTop: "5vh" }}>카테고리</DialogTitle>
                             <Box style={{ width: "50vw", marginRight: "2vw", marginLeft: "2vw", marginBottom: "5vh" }}>
@@ -204,7 +220,7 @@ const Leftbar = (props) => {
                         <Dialog onClose={() => setAdminModal(false)} open={adminModal} style={{ minWidth: "100vw" }} className={classes.showOnMobile}>
                             <DialogTitle variant="h5" style={{ paddingBottom: "3vh", paddingTop: "5vh" }}>관리자설정</DialogTitle>
                             <Box style={{ width: "50vw", marginRight: "2vw", marginLeft: "2vw", marginBottom: "5vh" }}>
-                                <AdminCategory onClick={setAdminModal} />
+                                <AdminCategory onClick={setAdminModal} setOpenPostModal={setOpenPostModal} setPostOption={setPostOption} />
                             </Box>
                         </Dialog>
                     </div>
