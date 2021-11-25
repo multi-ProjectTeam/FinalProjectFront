@@ -36,7 +36,7 @@ const Feed = (props) => {
     const removeList = (option, index, code) => {
         if(option === "Gallery"){
             superagent
-            .delete("http://118.67.142.194:8080/enterprise/" + enterpriseCode + "/image/" + code )
+            .delete("http://118.67.142.194:8080/enterprises/" + enterpriseCode + "/images/" + code )
             .end( (err,res) => {
                 console.log(err);
                 console.log(res);
@@ -47,7 +47,7 @@ const Feed = (props) => {
             
         }else if(option==="Menu") {
             superagent
-            .delete("http://118.67.142.194:8080/enterprise/" + enterpriseCode + "/menu/" + code )
+            .delete("http://118.67.142.194:8080/enterprises/" + enterpriseCode + "/menus/" + code )
             .end( (err,res) => {
                 console.log(err);
                 console.log(res);
