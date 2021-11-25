@@ -1,7 +1,8 @@
 import React from "react";
-import { Box, Button, Card, CardContent, Dialog,TextField, Typography } from "@mui/material";
+import { Box, Button, Card, CardContent, Dialog, TextField, Typography } from "@mui/material";
 import { makeStyles } from "@mui/styles"
 import { createTheme } from "@mui/material/styles";
+import MapContainer from "../searchdetail/components/MapContainer";
 
 const theme = createTheme()
 const useStyles = makeStyles(() => ({
@@ -16,6 +17,7 @@ const useStyles = makeStyles(() => ({
     },
     card: {
         // marginBottom: theme.spacing(5),
+        width: "50vh",
         [theme.breakpoints.up("sm")]: {
             display: 'flex',
             width: "50vw",
@@ -23,6 +25,7 @@ const useStyles = makeStyles(() => ({
     },
     informCard: {
         // marginBottom: theme.spacing(5),
+        width: "50vh",
         [theme.breakpoints.up("sm")]: {
             width: "50vw",
         },
@@ -60,18 +63,22 @@ const useStyles = makeStyles(() => ({
             display: 'flex',
             justifyContent: "center"
         },
-    }
+    },
 }));
 
 
 // 세번째 카드
 const MapCard = (props) => {
+    const { enterpriseJson } = props;
     const classes = useStyles();
 
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
-            <Card className={classes.card} style={{height:"50vh"}}>
-                MAP
+            <Card className={classes.card} style={{ height: "100%" }}>
+                <MapContainer array={[enterpriseJson]} shown={1} mapStyle={{
+                    width: '100%',
+                    height: '40vh'
+                }} />
             </Card>
         </div>
     )
@@ -330,7 +337,7 @@ const DetailCard = (props) => {
                                 연락처
                             </Typography>
                             <Typography component={'div'} variant="body2" sx={{ mt: 0, mb: 2 }}>
-                            {!modifyMode ?
+                                {!modifyMode ?
                                     <>{enterpriseJson.phone}</>
                                     :
                                     <TextField
@@ -386,7 +393,7 @@ const Inform = (props) => {
             </div>
 
             <div className={classes.cardOnModal}>
-                <MapCard/>
+                <MapCard enterpriseJson={enterpriseJson} />
             </div>
 
             {userType === "owner" &&

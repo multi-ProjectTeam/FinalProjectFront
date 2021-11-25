@@ -3,9 +3,9 @@ import { useMediaQuery } from 'react-responsive';
 
 const { kakao } = window;
 
-function MapContainer ({array, references, shown}) {
+function MapContainer ({array, references, shown, mapStyle}) {
     const isMobile = useMediaQuery({ maxWidth: 767 });
-
+    
     useEffect(()=>{
             const mapContainer = document.getElementById('map'), // 지도를 표시할 div  
             mapOption = { 
@@ -43,9 +43,16 @@ function MapContainer ({array, references, shown}) {
                         // for문에서 클로저를 만들어 주지 않으면 마지막 마커에만 이벤트가 등록됩니다
                         kakao.maps.event.addListener(marker, 'mouseover', makeOverListener(map, marker, infowindow));
                         kakao.maps.event.addListener(marker, 'mouseout', makeOutListener(infowindow));
-                        kakao.maps.event.addListener(marker, 'click', function() {
-                            references[i].current.scrollIntoView({behavior: "smooth"});
-                        });
+                        if(references !== undefined) {
+                            kakao.maps.event.addListener(marker, 'click', function() {
+                                references[i].current.scrollIntoView({behavior: "smooth"});
+                            });
+                        } else{
+                            kakao.maps.event.addListener(marker, 'click', function() {
+                                // console.log(`${result[0].y},${result[0].x}`);
+                                // window.open(`https://map.naver.com/v5/directions/-/-/-/transit?c=${result[0].y},${result[0].x},15,0,0,0,dh`, '_blank');
+                            });
+                        }
 
                         if(i === shown-1 ){
                             map.setCenter(position);
@@ -70,7 +77,7 @@ function MapContainer ({array, references, shown}) {
     },[array]);
 
     return (
-        <div id='map' style={{
+        <div id='map' style={mapStyle? mapStyle : {
             width: '70%', 
             height: isMobile ? '30vh': '40vh'
         }}></div>
