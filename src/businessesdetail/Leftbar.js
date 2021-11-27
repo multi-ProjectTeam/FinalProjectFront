@@ -9,6 +9,8 @@ import { createTheme } from "@mui/material/styles";
 import { ExpandLess, ExpandMore } from "@mui/icons-material";
 import SupervisorAccountIcon from '@mui/icons-material/SupervisorAccount';
 import UploadForm from "./UploadForm";
+import { useParams } from "react-router";
+import { Link, useNavigate } from "react-router-dom";
 
 const theme = createTheme()
 const useStyles = makeStyles(() => ({
@@ -91,6 +93,15 @@ const AdminCategory = (props) => {
         setOpenPostModal(true);
         setPostOption(option);
     }
+    const { enterpriseCode } = useParams();
+    // console.log("enterpriseCode : ", enterpriseCode);
+
+    const navigation = useNavigate ();
+    const routeChange = () => {
+        const path = `/enterprises/${enterpriseCode}/pos`;
+        navigation(path);
+    }
+
     return (
         <List component="div" disablePadding
             sx={{
@@ -106,7 +117,12 @@ const AdminCategory = (props) => {
             <ListItemButton onClick={() => adminOnClickHandler("gallery")}>
                 <Typography variant="body2">갤러리생성</Typography>
             </ListItemButton>
-            <ListItemButton >
+            {/* <Link to={`/enterprises/${enterpriseCode}/pos`} >
+                <ListItemButton >
+                    <Typography variant="body2">결제시스템</Typography>
+                </ListItemButton>
+            </Link> */}
+            <ListItemButton onClick={routeChange}>
                 <Typography variant="body2">결제시스템</Typography>
             </ListItemButton>
         </List>
@@ -114,7 +130,7 @@ const AdminCategory = (props) => {
 };
 
 const Leftbar = (props) => {
-    const { setFeed, userType, categoryList} = props;
+    const { setFeed, userType, categoryList } = props;
     const classes = useStyles();
     // 선택지에서 "메뉴"를 클릭하면 하위 선택지가 나오도록 하기 위한 state / event
     const [menuOpen, setMenuOpen] = React.useState(false);
@@ -151,7 +167,7 @@ const Leftbar = (props) => {
                 openPostModal={openPostModal}
                 option={postOption}
                 setOption={setPostOption}
-                setOpenPostModal={setOpenPostModal}/>
+                setOpenPostModal={setOpenPostModal} />
 
             <List component="nav">
 
