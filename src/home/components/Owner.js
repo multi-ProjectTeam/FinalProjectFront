@@ -3,7 +3,7 @@ import InputForRegister from './InputForRegister';
 import { Modal, Offcanvas, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import styles from '../css/Login.module.css';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 function Owner({ placement }) {
     // 오프캔버스 핸들링
@@ -28,6 +28,7 @@ function Owner({ placement }) {
             [name]: value,
         });
     };
+    const navigation = useNavigate ();
     const login = () => {
         if(loginId === ""){
             alert("아이디를 입력하세요.");
@@ -39,9 +40,10 @@ function Owner({ placement }) {
                 eno: loginId,
                 password: loginPwd
             }).then(function (response) {
-                console.log(response);
-                if(response.status == 200){
-
+                console.log(response.data.status);
+                if(response.data.status === true){
+                    const path = `/enterprises/${loginId}`;
+                    navigation(path)
                 }else{
                     alert("아이디와 비밀번호를 확인하세요.");
                 }
@@ -75,10 +77,22 @@ function Owner({ placement }) {
             if(response.status == 200){
                 console.log(response.status);
                 alert("등록되었습니다.");
+                setRegisterInputs({
+                    password: "",
+                    pwdCheck: "",
+                    email: "",
+                    ename: "",
+                    postcode: "",
+                    road_address: "",
+                    jibun_address: "",
+                    detail_address: "",
+                    phone: ""
+                })
             }else{
 
             }
           });
+          setShow(false);
     }
 
     return (
