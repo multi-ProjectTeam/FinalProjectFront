@@ -2,7 +2,10 @@ import { Container } from "@mui/material";
 import { makeStyles } from "@mui/styles"
 import { createTheme } from "@mui/material/styles";
 import Post from "./Post";
+import Canvas from "./Canvas";
 import Inform from "./Inform";
+import superagent from "superagent"
+import { useParams } from "react-router";
 
 const theme = createTheme()
 const useStyles = makeStyles(() => ({
@@ -22,15 +25,38 @@ const Feed = (props) => {
             setImageState(temp);
         } else {
             const temp = { ...menuJson };
-            temp.menu[index].MNAME = text.MNAME
-            temp.menu[index].PRICE = text.PRICE
-            temp.menu[index].MCOMMENT = text.MCOMMENT
+            temp.menus[index].mname = text.mname
+            temp.menus[index].price = text.price
+            temp.menus[index].mcomment = text.mcomment
             setMenuState(temp);
         }
     }
-
-    // 현재 feed와 category를 출력
-    console.log("feed = " + feed)
+    const {enterpriseCode} = useParams();
+    // 갤러리+메뉴 삭제 함수
+    const removeList = (option, index, code) => {
+        if(option === "Gallery"){
+            superagent
+            .delete("http://118.67.142.194:8080/enterprises/" + enterpriseCode + "/images/" + code )
+            .end( (err,res) => {
+                console.log(err);
+                console.log(res);
+                const temp = {...imageJson}
+                temp.images.splice(index, 1);
+                setImageState(temp)
+            } )
+            
+        }else if(option==="Menu") {
+            superagent
+            .delete("http://118.67.142.194:8080/enterprises/" + enterpriseCode + "/menus/" + code )
+            .end( (err,res) => {
+                console.log(err);
+                console.log(res);
+                const temp = {...menuJson}
+                temp.menus.splice(index, 1);
+                setMenuState(temp)
+            } )
+        }
+    }
 
     return (
         <Container className={classes.container}>
@@ -45,15 +71,15 @@ const Feed = (props) => {
                         <div>
                             {
                                 // 갤러리 이미지 출력
-                                imageJson.image.map((value, index) => (
-                                    <Post
+                                imageJson.images.map((value, index) => (
+                                    <Canvas
                                         key={index}
                                         index={index}
+                                        value={value}
                                         userType={userType}
                                         option="gallery"
-                                        image={value.PATH}
-                                        updateEnterprise={updateEnterprise} >
-                                    </Post>
+                                        removeList={removeList}
+                                        updateEnterprise={updateEnterprise} />
                                 ))
                             }
                         </div>
@@ -61,19 +87,16 @@ const Feed = (props) => {
                         <div>
                             {
                                 // 카테고리별 메뉴 출력
-                                menuJson.menu.map((value, index) => (
-                                    "menu-" + value.MCATEGORY === feed &&
+                                menuJson.menus.map((value, index) => (
+                                    "menu-" + value.mcategory === feed &&
                                     <Post
                                         key={index}
+                                        value={value}
                                         index={index}
                                         userType={userType}
                                         option="default"
-                                        title={value.MNAME}
-                                        price={value.PRICE}
-                                        image={value.MIMAGE}
-                                        updateEnterprise={updateEnterprise}>
-                                        {value.MCOMMENT}
-                                    </Post>
+                                        removeList={removeList}
+                                        updateEnterprise={updateEnterprise}/>
                                 ))
                             }
                         </div>
