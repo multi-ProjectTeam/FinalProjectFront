@@ -4,6 +4,7 @@ import Wrapper from "./businessesdetail/wrapper";
 import Menu from "./businessesdetail/Menu";
 import Home from "./home/routes/Home";
 import PosComponent from "./pos/PosComponent";
+import Finance from "./finance/routes/Finance";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route exact path="/enterprises/:enterpriseCode" element={<Wrapper userType="owner" />} />
         <Route exact path="/menu"                            element={<Menu />} />
         <Route exact path="/enterprises/:enterpriseCode/pos" element={<PosComponent />} />
+        <Route exact path="/enterprises/:eno/finance"    element={<Finance />} />
       </Routes>
     </Router>
   );
