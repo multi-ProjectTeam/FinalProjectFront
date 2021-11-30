@@ -75,7 +75,7 @@ const MapCard = (props) => {
     return (
         <div style={{ display: "flex", justifyContent: "center" }}>
             <Card className={classes.card} style={{ height: "100%" }}>
-                <MapContainer array={[enterpriseJson]} state={true} shown={1} mapStyle={{
+                <MapContainer array={[enterpriseJson]} shown={1} mapStyle={{
                     width: '100%',
                     height: '40vh'
                 }} />
