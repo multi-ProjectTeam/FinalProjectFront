@@ -45,7 +45,7 @@ const Wrapper = (props) => {
     const { enterpriseCode } = useParams();
 
     React.useEffect(() => {
-        const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode;
+        const url = "http://118.67.142.194:8080/enterprises/" + enterpriseCode;
         GETenterprise(url);
         GETcategories(url);
         GETmenus(url);
@@ -64,7 +64,7 @@ const Wrapper = (props) => {
 
     // enterprise를 수정했을 때, PUT 요청을 보내는 함수
     React.useEffect(() => {
-        const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode;
+        const url = "http://118.67.142.194:8080/enterprises/" + enterpriseCode;
         // 처음 화면을 띄웠을 때는 실행하지 않는다.
         if (enterpriseTemp) {
             superagent.put(url)

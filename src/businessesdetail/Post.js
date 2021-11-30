@@ -73,7 +73,7 @@ const Post = (props) => {
     const [menuTemp, setMenuTemp] = React.useState();
     React.useEffect(() => {
         if (menuTemp) {
-            const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode + "/menu/" + value.mcode;
+            const url = "http://118.67.142.194:8080/enterprises/" + enterpriseCode + "/menus/" + value.mcode;
 
             superagent.put(url)
                 .set('Content-Type', 'application/json')

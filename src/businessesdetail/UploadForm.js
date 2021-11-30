@@ -81,8 +81,8 @@ const UploadForm = (props) => {
             formData.append("data", JSON.stringify(uploadJson));
         }
 
-        const url = "http://118.67.142.194:8080/enterprise/" + enterpriseCode
-        const postUrl = url + (option !== "gallery" ? "/menu" : "/image");
+        const url = "http://118.67.142.194:8080/enterprises/" + enterpriseCode
+        const postUrl = url + (option !== "gallery" ? "/menus" : "/images");
 
         axios({
             method: "post",
