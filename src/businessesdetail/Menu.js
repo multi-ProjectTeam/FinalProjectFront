@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { Modal, Offcanvas, Button, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 
@@ -6,15 +7,18 @@ import MenuCard from './MenuCard';
 import OrderList from './OrderList';
 import Cart from './Cart';
 import styles from './Menu.module.css';
+import { MessageOutlined } from '@mui/icons-material';
 
 function Menu({ category, placement }) {
+    const {enterpriseCode} = useParams();
+
     // 메뉴 가져오기
     const [menus, setMenus] = useState([]);
     const [count, setCount] = useState(0);
     const getMenus = () => {
         axios({
             method: 'get',
-            url: 'http://118.67.142.194:8080/enterprises/1/menus',
+            url: `http://118.67.142.194:8080/enterprises/${enterpriseCode}/cart`,
             responseType: JSON
           }).then(function (response) {
               setMenus(response.data.menus);
@@ -28,10 +32,20 @@ function Menu({ category, placement }) {
     const [selected, setSelected] = useState([]);
     const [total, setTotal] = useState(0);
     const onClick = () => {
+        console.log("담기 클릭");
         setSelected(menus.filter(menu => menu.amount !== 0));
-        console.log("장바구니에 담김");
-        console.log(selected);
     }
+    // const openCart = async () => {
+    //     if(selected.length != 0){
+    //         const answer = window.confirm("장바구니에 담겼습니다. 확인하시겠습니까?");
+    //         if(answer){
+    //             setShow2(true);
+    //             setMenus(menus.map(menu => menu.amount > 0 ? {...menu, amount: 0} : menu));
+    //         }
+    //     }else{
+    //         alert("메뉴를 선택하세요.");
+    //     }
+    // }
 
     // 주문내역 오프캔버스 핸들링
     const [show, setShow] = useState(false);
@@ -50,8 +64,7 @@ function Menu({ category, placement }) {
 
     // 주문내역
     const [ordered, setOrdered] = useState([]);
-    console.log(menus);
-    console.log(selected);
+
     return(
         <>
             <div className="container">
@@ -83,7 +96,7 @@ function Menu({ category, placement }) {
                             <Offcanvas.Title>장바구니</Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            <Cart selected={selected} setSelected={setSelected} total={total} setTotal={setTotal} setOrdered={setOrdered} />
+                            <Cart selected={selected} setSelected={setSelected} total={total} setTotal={setTotal} setOrdered={setOrdered} eno={enterpriseCode} />
                         </Offcanvas.Body>
                         </Offcanvas>
                     </div>
