@@ -5,6 +5,7 @@ import { remove } from 'dom-helpers';
 
 import styles from './Menu.module.css';
 
+
 function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, table }) {
     const increase = (mcode, amount, e) => {
         setSelected(selected.map(menu => menu.mcode === mcode ? {...menu, amount: amount + 1} : menu));
@@ -36,6 +37,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, table }
               const ocode = response.data.ocode;
               console.log(ocode);
               putTableOrder(ocode);
+
               if(response.data.status == true){
                   axios({
                     method: 'post',
@@ -46,8 +48,10 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, table }
                     if(response.data.status == true){
                         axios({
                             method: 'post',
+
                             url: `http://118.67.142.194:5000/enterprises/${eno}/tables/${table}`,
                             data: {orderdetails : response.data.orderList}
+
                         });
                     }
                   });
@@ -55,7 +59,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, table }
             });
     }
 
-  
+
     return (
         <>
         <div className="container">

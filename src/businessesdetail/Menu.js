@@ -11,6 +11,7 @@ import { MessageOutlined } from '@mui/icons-material';
 
 function Menu({ category, placement }) {
     const {enterpriseCode,table} = useParams();
+
     // 메뉴 가져오기
     const [menus, setMenus] = useState([]);
     const [count, setCount] = useState(0);
@@ -64,6 +65,7 @@ function Menu({ category, placement }) {
     // 주문내역
     const [ordered, setOrdered] = useState([]);
 
+
     //결제 버튼
     const pay = async () =>{
         alert('결제 중입니다. 기다려주세요.');
@@ -76,7 +78,6 @@ function Menu({ category, placement }) {
                     }
         });
     }
-
     return(
         <>
             <div className="container">
