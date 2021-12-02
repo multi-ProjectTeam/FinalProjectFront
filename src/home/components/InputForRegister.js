@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import styles from '../css/Register.module.css';
-import { Modal } from 'react-bootstrap';
+import { Modal, Button, Form, Col } from 'react-bootstrap';
 import Post from './Post';
 
 function InputForRegister({ text, type, placeholder, name, value, registerInputs, setRegisterInputs }) {
@@ -15,7 +15,7 @@ function InputForRegister({ text, type, placeholder, name, value, registerInputs
         });
     };
     const searchAddress = () => setOpen(true);
-    
+    console.log(value);
     return (
         <>
             {text === '아이디' ? 
@@ -24,7 +24,7 @@ function InputForRegister({ text, type, placeholder, name, value, registerInputs
                             {text}
                     </div>
                     <div className="col-md-3">
-                        <input type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} readOnly/>
+                        <Form.Control type={type} name={name} value={value} onChange={onChange} readOnly />
                     </div>
                     <div className="col-md-2"></div>
                 </div> 
@@ -36,10 +36,10 @@ function InputForRegister({ text, type, placeholder, name, value, registerInputs
                             {text}
                         </div>
                         <div className="col-md-3">
-                            <input type={type} placeholder={placeholder} name={name} value={registerInputs.road_address === "" ? "" : registerInputs.extra_address === "" ? "" : `${registerInputs.road_address} (${registerInputs.extra_address})`} readOnly/>
+                            <Form.Control type={type} placeholder={placeholder} name={name} value={registerInputs.road_address === "" ? "" : registerInputs.extra_address === "" ? "" : `${registerInputs.road_address} (${registerInputs.extra_address})`} readOnly />
                         </div>
                         <div className="col-md-2">
-                            <button type="button" onClick={searchAddress}>주소검색</button>
+                            <Button variant="secondary" size="sm" onClick={searchAddress}>주소검색</Button>
                         </div>
                     </div>
                 </>
@@ -49,7 +49,7 @@ function InputForRegister({ text, type, placeholder, name, value, registerInputs
                         {text}
                     </div>
                     <div className="col-md-3">
-                        <input type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} />
+                        <Form.Control type={type} placeholder={placeholder} name={name} value={value} onChange={onChange} />
                     </div>
                     <div className="col-md-2"></div>
                 </div>

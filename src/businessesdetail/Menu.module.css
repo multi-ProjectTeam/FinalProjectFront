@@ -1,7 +1,26 @@
-.containger {
-    justify-content: center;
-    height: 100%;
+#topContainer {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 100%;
+}
+
+#titleDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#buttonDiv {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+#midContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .heightControll {
@@ -9,11 +28,43 @@
     margin-bottom: 5px;
 }
 
-.menu {
+#gridDiv {
     display: grid;
-    grid-template-columns: repeat(2, minmax(400px, 1fr));
-    grid-gap: 100px;
+    justify-items: center;
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 30px;
     padding: 50px;
-    width: 80%;
+    width: 100%;
     padding-top: 70px;
-  }
+}
+
+#btmButtonDiv {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media screen and (max-width:767px){
+    #topContainer {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width:100%;
+    }
+
+    #gridDiv {
+        display: grid;
+        justify-items: center;
+        grid-template-columns: repeat(1, minmax(auto, 767px));
+        column-gap: 30px;
+        padding: 50px;
+        width: 100%;
+        padding-top: 70px;
+    }
+
+    #btmButtonDiv {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}
