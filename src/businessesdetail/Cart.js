@@ -5,7 +5,8 @@ import { remove } from 'dom-helpers';
 
 import styles from './Menu.module.css';
 
-function Cart({ selected, setSelected, total, setTotal, setOrdered, eno }) {
+
+function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, table }) {
     const increase = (mcode, amount, e) => {
         setSelected(selected.map(menu => menu.mcode === mcode ? {...menu, amount: amount + 1} : menu));
     }
@@ -16,6 +17,14 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno }) {
         console.log("장바구니에서 삭제");
         setSelected(selected.filter(menu => mcode !== menu.mcode));
     }
+    const putTableOrder = (ocode) =>{
+        axios({
+            method:'post',
+            url: `http://118.67.142.194:8080/enterprises/${eno}/tables/${table}/order`,
+            data: {ocode:ocode}
+        });
+    };
+
     const order = () => {
         console.log(eno);
         setOrdered(selected);
@@ -27,6 +36,8 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno }) {
               console.log(response);
               const ocode = response.data.ocode;
               console.log(ocode);
+              putTableOrder(ocode);
+
               if(response.data.status == true){
                   axios({
                     method: 'post',
@@ -37,14 +48,17 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno }) {
                     if(response.data.status == true){
                         axios({
                             method: 'post',
-                            url: `http://118.67.142.194:5000/enterprises/${eno}/tables/1`,
-                            data: {orderdetail : response.data.orderList}
+
+                            url: `http://118.67.142.194:5000/enterprises/${eno}/tables/${table}`,
+                            data: {orderdetails : response.data.orderList}
+
                         });
                     }
                   });
               }
             });
     }
+
 
     return (
         <>

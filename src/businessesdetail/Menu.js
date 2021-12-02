@@ -10,7 +10,7 @@ import styles from './Menu.module.css';
 import { MessageOutlined } from '@mui/icons-material';
 
 function Menu({ category, placement }) {
-    const {enterpriseCode} = useParams();
+    const {enterpriseCode,table} = useParams();
 
     // 메뉴 가져오기
     const [menus, setMenus] = useState([]);
@@ -65,6 +65,19 @@ function Menu({ category, placement }) {
     // 주문내역
     const [ordered, setOrdered] = useState([]);
 
+
+    //결제 버튼
+    const pay = async () =>{
+        alert('결제 중입니다. 기다려주세요.');
+        await axios({
+            method: 'post',
+            url: `http://118.67.142.194:5000/enterprises/${enterpriseCode}/tables/${table}/pay`,
+            data : {
+                    eno: enterpriseCode,
+                    tno: table,
+                    }
+        });
+    }
     return(
         <>
             <div className="container">
@@ -96,7 +109,7 @@ function Menu({ category, placement }) {
                             <Offcanvas.Title>장바구니</Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            <Cart selected={selected} setSelected={setSelected} total={total} setTotal={setTotal} setOrdered={setOrdered} eno={enterpriseCode} />
+                            <Cart selected={selected} setSelected={setSelected} total={total} setTotal={setTotal} setOrdered={setOrdered} eno={enterpriseCode} table={table} />
                         </Offcanvas.Body>
                         </Offcanvas>
                     </div>
@@ -119,6 +132,7 @@ function Menu({ category, placement }) {
                 <div className={`row justify-content-md-center ${styles.heightControll}`}>
                     <div className="col-md-auto">
                         <Button onClick={onClick}>담기</Button>
+                        <Button onClick={pay}>주문하기</Button>
                     </div>
                 </div>
             </div>

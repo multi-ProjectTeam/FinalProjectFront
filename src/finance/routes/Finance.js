@@ -18,7 +18,7 @@ function Finance () {
     const [params,setParams] = useState({});
     const [salesList, setSalesList] = useState({});
     const [keyList, setKeyList] = useState([]);
-    const [dataState, setDataState] = useState(true);
+    const [dataState, setDataState] = useState(false);
 
     const {eno} = useParams();
 
@@ -34,7 +34,6 @@ function Finance () {
             url: `http://118.67.142.194:8080/enterprises/${eno}/finance?ct=${params.categoryType}&pc=${params.periodCategory}&pt=${params.periodType}&sp=${params.startPeriod}&ep=${params.endPeriod}`,
             method: 'GET'
         });
-        console.log(json);
         setYearSales(json.data.year);
         setQuaterSales(json.data.quater);
         setMonthSales(json.data.month);
@@ -44,7 +43,7 @@ function Finance () {
     };
     const getMenuSales = async() =>{
         const json = await axios({
-            url: `http://118.67.142.194:8080/${eno}/finance?ct=${params.categoryType}&pc=${params.periodCategory}&pt=${params.periodType}&sp=${params.startPeriod}&ep=${params.endPeriod}&m=${params.menu}&mc=${params.menuCategory}`,
+            url: `http://118.67.142.194:8080/enterprises/${eno}/finance?ct=${params.categoryType}&pc=${params.periodCategory}&pt=${params.periodType}&sp=${params.startPeriod}&ep=${params.endPeriod}&m=${params.menu}&mc=${params.menuCategory}`,
             method: 'GET'
         });
         setYearSales(json.data.year);
@@ -70,15 +69,15 @@ function Finance () {
     useEffect(()=>{
         if(yearSales.sales !== undefined && quaterSales.sales !== undefined && monthSales.sales !== undefined && timeSales.sales !== undefined){
             if(yearSales.sales.length === 0 && quaterSales.sales.length === 0 && monthSales.sales.length === 0 && timeSales.sales.length === 0){
-                setDataState(true);
-            } else{
                 setDataState(false);
+            } else{
+                setDataState(true);
             } 
         }else{
-            setDataState(true);
+            setDataState(false);
         }
     },[yearSales,quaterSales,monthSales,timeSales])
-
+    
     return (
         <div id={styles.wrap}>
             <ScrollTopButton/>
@@ -92,13 +91,14 @@ function Finance () {
                 <SelectionBox businessNum={business.eno} setParams={setParams} dataState={setDataState}/>
             </Fragment>
             <Fragment>
-                {dataState ? null:
+                {dataState ? 
                     <div id={styles.charwrap}>
                         <Chart dataList={yearSales.sales} labelList={yearSales.label} rgb={'rgba(1, 151, 191, 0.5)'} title={'Sales per Year'}/>
                         <Chart dataList={quaterSales.sales} labelList={quaterSales.label} rgb={'rgba(255, 99, 132, 0.5)'} title={'Sales per Quater'}/>
                         <Chart dataList={monthSales.sales} labelList={monthSales.label} rgb={'rgba(0, 182, 0, 0.4)'} title={'Sales per Month'}/>
                         <Chart dataList={timeSales.sales} labelList={timeSales.label} rgb={'rgba(240, 240, 0, 0.5)'} title={'Sales per Time'}/>
                     </div>
+                    : null
                 }
             </Fragment>
             <SalesReport salesList={dataState ? salesList : null} keyList={dataState ? keyList : null}/>

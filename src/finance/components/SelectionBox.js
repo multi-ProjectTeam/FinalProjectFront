@@ -46,7 +46,7 @@ function SelectionBox({businessNum,setParams,dataState}) {
     }
     
     useEffect(()=>{
-        dataState(true);
+        dataState(false);
         setStartPeriod(null);
         setEndPeriod(null);
         setFirstCategoryState(0);
@@ -70,7 +70,7 @@ function SelectionBox({businessNum,setParams,dataState}) {
     },[firstCategoryValue]);
 
     useEffect(()=>{
-        dataState(true);
+        dataState(false);
         setStartPeriod(null);
         setEndPeriod(null);
         setFourthCategory([]);
@@ -89,7 +89,7 @@ function SelectionBox({businessNum,setParams,dataState}) {
     },[secondCategoryValue]);
 
     useEffect(()=>{
-        dataState(true);
+        dataState(false);
         setStartPeriod(null);
         setEndPeriod(null);
         // setFourthCategoryValue('');

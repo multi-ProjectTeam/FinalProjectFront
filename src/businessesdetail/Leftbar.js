@@ -97,15 +97,16 @@ const AdminCategory = (props) => {
     // console.log("enterpriseCode : ", enterpriseCode);
 
     const navigation = useNavigate ();
+    const navi = useNavigate();
     const routeChange = () => {
         const path = `/enterprises/${enterpriseCode}/pos`;
         navigation(path);
-    }
+    };
     const sales = () => {
         const path = `/enterprises/${enterpriseCode}/finance`;
         navigation(path);
-    }
-
+    };
+    console.log(1);
     return (
         <List component="div" disablePadding
             sx={{
