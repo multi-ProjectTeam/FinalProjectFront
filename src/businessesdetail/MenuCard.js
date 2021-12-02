@@ -5,15 +5,12 @@ import styles from './MenuCard.module.css';
 
 function MenuCard({ mcode, mname, mcomment, price, amount, menus, setMenus }) {
     const increase = () => {
-        console.log(mcode);
-        console.log(amount);
         setMenus(menus.map(menu => menu.mcode === mcode ? {...menu, amount: amount + 1} : menu));
     }
     const decrease = () => {
-        console.log(mcode);
-        console.log(amount);
         setMenus(menus.map(menu => menu.mcode === mcode && menu.amount > 0 ? {...menu, amount: amount - 1} : menu));
     }
+
     return(
         <div >
             <div className={`row justify-content-md-center ${styles.heightControll}`}>

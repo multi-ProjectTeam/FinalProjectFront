@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, Button, CloseButton } from 'react-bootstrap';
+import axios from 'axios';
 import { remove } from 'dom-helpers';
 
 import styles from './Menu.module.css';
 
-function Cart({ selected, setSelected, total, setTotal, setOrdered }) {
+function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, table }) {
     const increase = (mcode, amount, e) => {
         setSelected(selected.map(menu => menu.mcode === mcode ? {...menu, amount: amount + 1} : menu));
     }
@@ -15,16 +16,46 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered }) {
         console.log("장바구니에서 삭제");
         setSelected(selected.filter(menu => mcode !== menu.mcode));
     }
+    const putTableOrder = (ocode) =>{
+        axios({
+            method:'post',
+            url: `http://118.67.142.194:8080/enterprises/${eno}/tables/${table}/order`,
+            data: {ocode:ocode}
+        });
+    };
+
     const order = () => {
+        console.log(eno);
         setOrdered(selected);
-        // axios({
-        //     method: 'post',
-        //     url: 'http://118.67.142.194:8080/enterprises/1/menus',
-        //     responseType: JSON
-        //   }).then(function (response) {
-        //       setMenus(response.data.menus);
-        //     });
+        axios({
+            method: 'post',
+            url: `http://118.67.142.194:8080/enterprises/${eno}/orders`,
+            data : {total : total}
+          }).then(function (response) {
+              console.log(response);
+              const ocode = response.data.ocode;
+              console.log(ocode);
+              putTableOrder(ocode);
+              if(response.data.status == true){
+                  axios({
+                    method: 'post',
+                    url: `http://118.67.142.194:8080/enterprises/${eno}/orders/${ocode}/orderdetails`,
+                    data: {orderdetail : selected}
+                  }).then(function (response) {
+                    console.log(response.data.orderList);
+                    if(response.data.status == true){
+                        axios({
+                            method: 'post',
+                            url: `http://118.67.142.194:5000/enterprises/${eno}/tables/${table}`,
+                            data: {orderdetails : response.data.orderList}
+                        });
+                    }
+                  });
+              }
+            });
     }
+
+  
     return (
         <>
         <div className="container">

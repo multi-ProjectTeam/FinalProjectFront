@@ -10,15 +10,13 @@ import styles from '../css/SalesReport.module.css';
 
 export default function SalesReport({salesList,keyList}) {
     const [noData, setNoData] = React.useState(true);
-    console.log(keyList);
     React.useEffect(()=>{
-        if(keyList === null || keyList[0] === '2000-01-01' || keyList.length === 0){
+        if(keyList === null || keyList[0] === '2000-01-01' || keyList.length === 0 || salesList ===null){
             setNoData(true);
         } else{
             setNoData(false);
         }
-    },[salesList]);
-    console.log(noData);
+    },[salesList,keyList]);
     return (
     <div id={styles.reportWrap}>
         {noData ? null 
