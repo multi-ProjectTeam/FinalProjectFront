@@ -1,0 +1,1 @@
+export { default as WindowIcon } from "./img/window.png"
