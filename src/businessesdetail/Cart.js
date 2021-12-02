@@ -5,6 +5,7 @@ import { remove } from 'dom-helpers';
 
 import styles from './Menu.module.css';
 
+
 function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, setOcode, setShow, table }) {
     const increase = (mcode, amount, e) => {
         setSelected(selected.map(menu => menu.mcode === mcode ? {...menu, amount: amount + 1} : menu));

@@ -101,7 +101,10 @@ const AdminCategory = (props) => {
         const path = `/enterprises/${enterpriseCode}/pos`;
         navigation(path);
     }
-
+    const sales = () => {
+        const path = `/enterprises/${enterpriseCode}/finance`;
+        navigation(path);
+    }
     return (
         <List component="div" disablePadding
             sx={{
@@ -124,6 +127,9 @@ const AdminCategory = (props) => {
             </Link> */}
             <ListItemButton onClick={routeChange}>
                 <Typography variant="body2">결제시스템</Typography>
+            </ListItemButton>
+            <ListItemButton onClick={sales}>
+                <Typography variant="body2">매출현황</Typography>
             </ListItemButton>
         </List>
     );
