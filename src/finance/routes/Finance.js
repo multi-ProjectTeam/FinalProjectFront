@@ -19,7 +19,7 @@ function Finance () {
     const [salesList, setSalesList] = useState({});
     const [keyList, setKeyList] = useState([]);
     const [dataState, setDataState] = useState(false);
-
+    
     const {eno} = useParams();
 
     const getBusiness = async () => {
@@ -53,7 +53,7 @@ function Finance () {
         setSalesList(json.data.saleslist);
         setKeyList(json.data.keylist);
     }
-
+    console.log(keyList);
     useEffect(()=>{
         getBusiness();
     },[]);

@@ -39,6 +39,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, 
                         url: `http://118.67.142.194:8080/enterprises/${eno}/orders/${ocode}/orderdetails`,
                         data: {orderdetail : selected}
                       }).then(function (response) {
+                        console.log(response.data.orderList);
                         setOrdered(response.data.orderList);
                         if(response.data.status == true){
                             axios({
@@ -50,6 +51,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, 
                       });
                   }
                 });
+            alert("주문이 전달되었습니다.");
             setShow(false);
             setSelected([]);
         }
@@ -64,7 +66,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, 
                 <div key={menu.id} className={`row justify-content-md-center ${styles.heightControll}`}>
                     <div className="col-md-auto">
                         <Card style={{ width: '18rem' }}>
-                        {menu.mimage != null ? 
+                        {menu.mimage !== "" ? 
                         <Card.Img variant="top" src={menu.mimage} alt="메뉴사진"/> 
                         :
                         <Card.Img variant="top" src='https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRyestlco1LxKFs_21Y8BO4qp-69YdbdgMnOA&usqp=CAU' alt="메뉴사진"/>
@@ -72,7 +74,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, 
                         <Card.Body style={{textAlign: 'center'}}>
                             <Card.Title>{menu.mname}</Card.Title>
                             <Card.Text>{menu.mcomment}</Card.Text>
-                            <Card.Text>{menu.price}</Card.Text>
+                            <Card.Text>{menu.price} KRW</Card.Text>
                             <Card.Text>
                                 <Button variant="outline-secondary" size="sm" onClick={(e)=>{decrease(menu.mcode, menu.amount, e)}}>-</Button>
                                 <span style={{margin: '5px'}}>{menu.amount}</span>
@@ -86,7 +88,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, 
             ))}
             <div className={`row justify-content-md-center ${styles.heightControll}`}>
                 <div className="col-md-auto">
-                    <span>주문금액 : {total}</span>
+                    <span>주문금액 : {total} KRW</span>
                 </div>
             </div>
             <div className={`row justify-content-md-center ${styles.heightControll}`}>
@@ -96,7 +98,7 @@ function Cart({ selected, setSelected, total, setTotal, setOrdered, eno, ocode, 
             </div>
             </>
             :
-            "장바구니 비었음" 
+            "장바구니가 비었습니다." 
         }
         </div>
         </>

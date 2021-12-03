@@ -5,6 +5,7 @@ const useStyles = makeStyles((theme) => ({
     toolbar: {
         display: "flex",
         justifyContent: "space-between",
+        background: "#222222",
     },
 }));
 

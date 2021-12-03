@@ -1,17 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Table } from 'react-bootstrap';
 
-function OrderList({ ordered }) {
-    console.log(ordered);
-    const [total, setTotal] = useState(0);
-    useEffect(() => {
-        let price = 0;
-        setTotal(ordered.map(menu => {
-            price += menu.price * menu.count
-        }))
-    }, [ordered]);
-    console.log("ordeList: " + total);
-    console.log(ordered);
+function OrderList({ ordered, total }) {
+
     return (
         <>
         {ordered.length == 0 ? 
@@ -23,7 +14,7 @@ function OrderList({ ordered }) {
                     <th></th>
                     <th>메뉴</th>
                     <th>수량</th>
-                    <th>가격</th>
+                    <th>가격 (KRW)</th>
                     </tr>
                 </thead>
                 <tbody>

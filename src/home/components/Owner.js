@@ -9,15 +9,7 @@ import InputForRegister from './InputForRegister';
 
 function Owner({ placement }) {
     const [id, setId] = useState(0);
-    useEffect(() => {
-        axios({
-            url:"http://118.67.142.194:8080/enterprises/count",
-            method:"get",
-            responseType:"json"
-        }).then(function(response) {
-            setId(response.data + 1);
-        })
-    }, [])
+
     // 오프캔버스 핸들링
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false)
@@ -27,6 +19,13 @@ function Owner({ placement }) {
             loginId: "",
             loginPwd: ""
         });
+        axios({
+            url:"http://118.67.142.194:8080/enterprises/count",
+            method:"get",
+            responseType:"json"
+        }).then(function(response) {
+            setId(response.data + 1);
+        })
     };
     const [loginInputs, setLoginInputs] = useState({
         loginId: "",

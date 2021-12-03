@@ -18,7 +18,6 @@ function Menu({ placement }) {
     const [categories, setCategories] = useState([{
         idx: 0,
         cname: ""
-        
     }]);
     const [count, setCount] = useState(0);
     const getMenus = () => {
@@ -41,20 +40,18 @@ function Menu({ placement }) {
             method: 'post',
             url: `http://118.67.142.194:5000/enterprises/${enterpriseCode}/tables/${table}/pay`,
             data : {
-                    eno: enterpriseCode,
-                    tno: table,
-                    }
+                eno: enterpriseCode,
+                tno: table,
+            }
         });
     }
 
     // 담기 버튼 이벤트
     const [selected, setSelected] = useState([]);
     const [total, setTotal] = useState(0);
+    const [total2, setTotal2] = useState(0);
     const onClick = () => {
         setSelected(menus.filter(menu => menu.amount !== 0));
-        selected.map(menu => {
-            total += menu.amount * menu.price
-        })
         alert("장바구니에 담겼습니다.");
     }
     useEffect(() => {
@@ -77,6 +74,11 @@ function Menu({ placement }) {
     const [show2, setShow2] = useState(false);
     const handleClose2 = () => setShow2(false)
     const handleShow2 = () => {
+        let price = 0;
+        selected.map(menu => {
+            price += (menu.amount * menu.price)
+        })
+        setTotal2(price);
         setShow2(true);
     };
 
@@ -146,7 +148,7 @@ function Menu({ placement }) {
                 <Offcanvas.Title>주문내역 (table {table}) </Offcanvas.Title>
             </Offcanvas.Header>
             <Offcanvas.Body>
-                <OrderList ordered={ordered}/>
+                <OrderList ordered={ordered} total={total2} />
             </Offcanvas.Body>
             </Offcanvas>
         </>
